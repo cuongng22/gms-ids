@@ -14,7 +14,6 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class User extends BaseEntity {
 
@@ -26,10 +25,10 @@ public class User extends BaseEntity {
     @Column(name = "USER_NAME", length = 30, nullable = false)
     String userName;
 
-    @Column(name = "PASSWORD", length = 128, nullable = false)
+    @Column(name = "PASSWORD", length = 128)
     String password;
 
-    @Column(name = "FULL_NAME", length = 50, nullable = false)
+    @Column(name = "FULL_NAME", length = 50)
     String fullName;
 
     @Column(name = "BIRTH_DATE")
@@ -67,10 +66,10 @@ public class User extends BaseEntity {
     @Column(name = "DEPARTMENT_ID", nullable = false)
     Long departmentId;  // FK → DEPARTMENTS
 
-    @Column(name = "POSITION_CD", nullable = false)
+    @Column(name = "POSITION_CD")
     Integer positionCode;  // lookup
 
-    @Column(name = "STATUS_FLG", nullable = false)
+    @Column(name = "STATUS_FLG")
     Integer statusFlg;  // 1-active, 0-inactive
 
     @Column(name = "COMPANY_PROFILE_ID")

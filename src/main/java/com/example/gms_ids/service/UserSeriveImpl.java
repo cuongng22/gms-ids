@@ -1,16 +1,27 @@
 package com.example.gms_ids.service;
 
 import com.example.gms_ids.dto.request.UserRequest;
+import com.example.gms_ids.repository.UserRepository;
 import com.example.gms_ids.table.User;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.gms_ids.util.UserMapper;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-@Service
-public class UserSeriveImpl implements  UserService{
-    private final ObjectMapper objectMapper;
+import java.util.List;
 
-    public UserSeriveImpl(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
+@Service
+@RequiredArgsConstructor
+public class UserSeriveImpl implements UserService {
+    private final UserMapper mapper;
+    private final UserRepository userRepository;
+
+    @Override
+    public Page<User> findAll (int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return userRepository.findAll(pageable);
     }
 
     @Override
@@ -19,10 +30,15 @@ public class UserSeriveImpl implements  UserService{
     }
 
     @Override
-    public User create(UserRequest user) {
-        User userCreated = new User();
-        userCreated = objectMapper.convertValue(user, User.class);
-        return null;
+    public User create(UserRequest userRequest) {
+        try {
+            User userCreated = mapper.toEntity(userRequest);
+            userRepository.save(userCreated);
+            return userCreated;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
