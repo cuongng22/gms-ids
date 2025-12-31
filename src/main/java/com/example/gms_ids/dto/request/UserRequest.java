@@ -9,6 +9,7 @@ import java.time.LocalDate;
 @Setter
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
 public class UserRequest {
+    String id;
     String userName;
     String password;
     String fullName;
